@@ -1,5 +1,6 @@
 package com.antondolganov.contacts2.db.dao
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import com.antondolganov.contacts2.data.model.Contact
@@ -20,7 +21,7 @@ interface ContactDao {
     fun deleteAll()
 
     @Query("SELECT * FROM Contact WHERE id = :id")
-    fun getContactById(id: String): Contact
+    fun getContactById(id: String): LiveData<Contact>
 
     @Query("SELECT id, name, phone, height FROM Contact WHERE name LIKE '%' || :query || '%' ORDER BY name ASC")
     fun getContactsByName(query: String): DataSource.Factory<Int, Contact>
