@@ -1,7 +1,8 @@
-package com.antondolganov.contacts2
+package com.antondolganov.contacts2.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.antondolganov.contacts2.R
 
 class MainActivity : AppCompatActivity() {
 

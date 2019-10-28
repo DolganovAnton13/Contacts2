@@ -1,4 +1,4 @@
-package com.antondolganov.contacts2
+package com.antondolganov.contacts2.view.fragment
 
 
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.antondolganov.contacts2.R
 
 
 // TODO: Rename parameter arguments, choose names that match
