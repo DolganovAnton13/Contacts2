@@ -1,5 +1,6 @@
 package com.antondolganov.contacts2.data.model
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.antondolganov.contacts2.data.Temperament
@@ -17,7 +18,7 @@ data class Contact(
     val height: Float,
     val biography: String,
     val temperament: Temperament,
-    val educationPeriod: EducationPeriod
+    @Embedded val educationPeriod: EducationPeriod
 ) {
     fun getTemperamentName(): String {
         val name = temperament.name

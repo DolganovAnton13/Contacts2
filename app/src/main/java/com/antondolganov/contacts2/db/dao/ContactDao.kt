@@ -23,9 +23,9 @@ interface ContactDao {
     @Query("SELECT * FROM Contact WHERE id = :id")
     fun getContactById(id: String): LiveData<Contact>
 
-    @Query("SELECT id, name, phone, height FROM Contact WHERE name LIKE '%' || :query || '%' ORDER BY name ASC")
+    @Query("SELECT * FROM Contact WHERE name LIKE '%' || :query || '%' ORDER BY name ASC")
     fun getContactsByName(query: String): DataSource.Factory<Int, Contact>
 
-    @Query("SELECT id, name, phone, height FROM Contact WHERE clearPhone LIKE '%' || :query || '%' ORDER BY name ASC")
+    @Query("SELECT * FROM Contact WHERE clearPhone LIKE '%' || :query || '%' ORDER BY name ASC")
     fun getContactsByPhone(query: String): DataSource.Factory<Int, Contact>
 }

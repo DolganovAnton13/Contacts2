@@ -26,23 +26,17 @@ class DatabaseRepository(val contactDao: ContactDao) {
         return contactDao.getContactsByPhone(query)
     }
 
-    /*fun insertContactList(contacts: List<Contact>) {
-        Completable.fromAction(object : Action() {
-            @Throws(Exception::class)
-            fun run() {
-                contactDao.insert(contacts)
-            }
+    fun insertContactList(contacts: List<Contact>) {
+        Completable.fromAction({
+            contactDao.insert(contacts)
         }).subscribeOn(Schedulers.io())
             .subscribe()
     }
 
     fun deleteAllContacts() {
-        Completable.fromAction(object : Action() {
-            @Throws(Exception::class)
-            fun run() {
+        Completable.fromAction({
                 contactDao.deleteAll()
-            }
         }).subscribeOn(Schedulers.io())
             .subscribe()
-    }*/
+    }
 }

@@ -3,16 +3,16 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
 
-   <!-- <data>
+    <data>
 
         <variable
                 name="model"
-                type="com.antondolganov.contacts.view.fragment.FragmentProfile"/>
+                type="com.antondolganov.contacts2.view.fragment.FragmentProfile"/>
         <variable
                 name="contact"
-                type="com.antondolganov.contacts.data.model.Contact" />
+                type="com.antondolganov.contacts2.data.model.Contact" />
 
-    </data>-->
+    </data>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -47,8 +47,10 @@
                 android:textColor="@color/colorClickText"
                 android:textSize="14sp"
                 android:text="@{contact.phone}"
-                android:onClick="@{() -> model.onPhoneNumberClick()}"
                 tools:text="+7 (881) 470-3094"/>
+               <!-- android:onClick="@{() -> model.onPhoneNumberClick()}"-->
+
+
 
         <TextView
                 android:layout_width="match_parent"
