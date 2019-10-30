@@ -34,6 +34,6 @@ data class Contact(
     }
 
     fun createClearPhone() {
-        clearPhone = phone.replace("\\D+", "")
+       clearPhone= Regex("""\D+""").replace(phone, "")
     }
 }
