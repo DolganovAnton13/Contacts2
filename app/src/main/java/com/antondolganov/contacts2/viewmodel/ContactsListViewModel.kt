@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.antondolganov.contacts2.App
+import com.antondolganov.contacts2.network.NetworkState
 import com.antondolganov.contacts2.data.model.Contact
 import com.antondolganov.contacts2.repository.DataRepository
 import com.antondolganov.contacts2.repository.DatabaseRepository
@@ -28,30 +29,41 @@ class ContactsListViewModel(application: Application) : AndroidViewModel(applica
     val contactsLiveData = MutableLiveData<List<Contact>>()
     val statusLiveData = MutableLiveData<String>()
     val showLoadingLiveData = MutableLiveData<Boolean>()
+    var netWorkState = NetworkState(application)
 
     init {
         (application as App).appComponent.inject(this)
+        showLoadingLiveData.postValue(false)
         loadContactsFromServer()
+
     }
 
-    fun getContactsPagedList(): LiveData<PagedList<Contact>> {
+    fun getContactsPagedList(): LiveData<PagedList<Contact>>
+    {
         return LivePagedListBuilder(database.getContacts(), 20).build()
     }
 
     @SuppressLint("CheckResult")
     fun loadContactsFromServer() {
-        showLoadingLiveData.postValue(true)
+        if(netWorkState.isOnline()) {
+            showLoadingLiveData.postValue(true)
 
-        data.getContacts()
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                contactsLiveData.postValue(it)
-                statusLiveData.postValue("Загружено")
-                showLoadingLiveData.postValue(false)
-            }, {
-                statusLiveData.postValue("Ошибка: ${it.message}")
-                showLoadingLiveData.postValue(false)
-            })
+            data.getContacts()
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    contactsLiveData.postValue(it)
+                    statusLiveData.postValue("Загружено")
+                    showLoadingLiveData.postValue(false)
+                }, {
+                    statusLiveData.postValue("Ошибка: ${it.message}")
+                    showLoadingLiveData.postValue(false)
+                })
+        }
+        else
+        {
+            statusLiveData.postValue("Нет подключения к сети")
+            showLoadingLiveData.postValue(false)
+        }
     }
 
     fun getResultsSearchQuery(): LiveData<PagedList<Contact>> {
@@ -66,9 +78,4 @@ class ContactsListViewModel(application: Application) : AndroidViewModel(applica
     fun insertContactList(contacts: List<Contact>) {
         database.insertContactList(contacts)
     }
-
-    fun deleteAllContacts() {
-        database.deleteAllContacts()
-    }
-
 }

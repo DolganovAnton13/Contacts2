@@ -28,14 +28,8 @@ class DatabaseRepository(val contactDao: ContactDao) {
 
     fun insertContactList(contacts: List<Contact>) {
         Completable.fromAction({
+            contactDao.deleteAll()
             contactDao.insert(contacts)
-        }).subscribeOn(Schedulers.io())
-            .subscribe()
-    }
-
-    fun deleteAllContacts() {
-        Completable.fromAction({
-                contactDao.deleteAll()
         }).subscribeOn(Schedulers.io())
             .subscribe()
     }

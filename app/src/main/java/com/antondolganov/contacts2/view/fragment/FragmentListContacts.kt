@@ -81,7 +81,9 @@ class FragmentListContacts : Fragment(), ContactClickListener, SwipeRefreshLayou
 
     private fun loadContactList() {
         model.getContactsPagedList().observe(viewLifecycleOwner, Observer { contacts ->
-            contactsAdapter.submitList(contacts)
+            if (model.showLoadingLiveData.value == false) {
+                contactsAdapter.submitList(contacts)
+            }
         })
     }
 
@@ -101,6 +103,7 @@ class FragmentListContacts : Fragment(), ContactClickListener, SwipeRefreshLayou
             binding.searchView.setQuery(model.searchQuery, true)
         } else
             getContactsFromServer()
+
 
         RxSearchView.queryTextChanges(binding.searchView)
             .debounce(800, TimeUnit.MILLISECONDS)
@@ -149,8 +152,7 @@ class FragmentListContacts : Fragment(), ContactClickListener, SwipeRefreshLayou
 
     override fun onRefresh() {
         binding.searchView.setQuery(null, false);
-        model.searchQuery=null
-        model.deleteAllContacts();
+        model.searchQuery = null
         model.loadContactsFromServer()
     }
 }
